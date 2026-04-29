@@ -1,0 +1,84 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+    html,body{
+    width: 100vw;
+    height: 100vh;
+    background: #dcdada;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+h1{
+  margin: 20px;
+  color: rgb(48, 177, 224);
+  font-size: 3.5vw;
+}
+.conversionArea {
+background:#ffff ;
+width: 90%;
+height: 80vh;
+max-width: 700px;
+display: flex;
+flex-direction: column;
+overflow: hidden;
+border-radius: 10px;
+}
+.messages {
+  flex: 1;
+padding: 15px;
+overflow-y: auto;
+background: #de83c1;
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+.msg {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 17px;
+  font-size: 1.5vw;
+  line-height: 1.2;
+  word-wrap: break-word;
+}
+.incomingMessage{
+  background: #544b51;
+  align-self: flex-start;
+  border:1px solid #272526
+}
+.outgoingMessage{
+  background: #6c3b5d;
+  align-self: flex-end;
+  border:1px solid #a26182
+}
+.inputs{
+  display: flex;
+  border-top: 1px solid #ffff;
+  padding: 10px;
+  background: #deb0d0;
+}
+.inputs input[type='text']{
+  flex: 1;
+  padding: 10px 15px ;
+  font-size: 1.0vw;
+  border-radius: 21px;
+}
+.inputs button{
+  padding: 10px 15px;
+  margin-left: 10px;
+  font-size: 1vw;
+  background-color: rgb(3, 71, 30);
+  color: #ffff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  /* transition: 0.3 ease; */
+}
+.inputs button:hover{
+  background-color: rgb(177, 182, 186);
+  color: #272526;
+}
