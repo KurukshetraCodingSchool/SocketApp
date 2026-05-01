@@ -1,5 +1,5 @@
 <%- include('partials/header')%>
-<h1> Socket Chat App</h1>
+<div class="chat-header">💬 Chat App</div>
 <div class="conversionArea">
   <div class="messages"></div>
   <div class="inputs">
@@ -10,38 +10,44 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  const socket = io();
-  function incomingMessage(msg){
-    document.querySelector('.messages').innerHTML+=`<div class="msg incomingMessage">${msg}</div>`;
-  }
-    function outgoingMessage(msg){
-    document.querySelector('.messages').innerHTML+=`<div class="msg outgoingMessage">${msg}</div>`;
-  }
+const socket = io();
 
-  const input = document.querySelector('input')
-  const button = document.querySelector('button')
+const msgBox = document.querySelector('.messages');
 
-  function sendMessage(){
-const msg = input.value.trim();
-if (msg !=='') {
-  outgoingMessage(msg);
-  socket.emit('newmsg',msg)
-  input.value='';
+function scrollBottom() {
+  msgBox.scrollTop = msgBox.scrollHeight;
 }
+
+ function incomingMessage(msg) {
+    msgBox.innerHTML+=`<div class="msg incomingMessage">${msg}</div>`
+    scrollBottom();
   }
-  // click event
-button.addEventListener('click',sendMessage);
+  function outgoingMessage(msg) {
+    msgBox.innerHTML+=`<div class="msg outgoingMessage">${msg}</div>`
+    scrollBottom();
 
-// key event
-  input.addEventListener('keydown',(e)=>{
-    if (e.key === 'Enter') {
-      sendMessage();
-    }
-  });
+  }
+const input = document.querySelector('input');
+const button = document.querySelector('button');
 
-  socket.on('incomingMessage',(message)=>{
-    incomingMessage(message);
-  })
+function sendMessage(){
+  const msg = input.value.trim();
+  if (msg !== '') {
+    outgoingMessage(msg);
+    socket.emit('newmsg', msg);
+    input.value = '';
+  }
+}
+
+button.addEventListener('click', sendMessage);
+
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') sendMessage();
+});
+
+socket.on('incomingMessage', (message) => {
+  incomingMessage(message);
+});
 </script>
 <%- include('partials/footer')%>
   

@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-const mongodb= mongoose.connect('mongodb://127.0.0.1:27017/Socketapp').then(()=>{
+const mongodb= mongoose.connect('mongodb://0.0.0.0/Socketapp').then(()=>{
     console.log('db connected✅');
 }).catch((error)=>{
     console.log(error);

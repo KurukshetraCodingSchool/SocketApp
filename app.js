@@ -1,18 +1,15 @@
 var createError = require('http-errors');
 var express = require('express');
-const db = require('./config/db')
-const http = require('http');
-const { Server } = require('socket.io');
 var path = require('path');
+const db = require('./config/db')
+const server = require('socket.io');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-var app = express();
-const server = http.createServer(app);   // important
-const io = new Server(server); 
+var app = express(); 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

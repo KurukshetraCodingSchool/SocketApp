@@ -1,84 +1,107 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+body {
+  margin: 0;
+  padding: 0;
+  background: #ece5dd;
+  font-family: 'Segoe UI', sans-serif;
+  position: relative;
 }
-    html,body{
-    width: 100vw;
-    height: 100vh;
-    background: #dcdada;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: hidden;
+
+/* Header */
+.chat-header {
+  position: fixed;
+  width: 100%;
+  background: #075e54;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
-h1{
-  margin: 20px;
-  color: rgb(48, 177, 224);
-  font-size: 3.5vw;
-}
+
+/* Main Chat Box */
 .conversionArea {
-background:#ffff ;
-width: 90%;
-height: 80vh;
-max-width: 700px;
-display: flex;
-flex-direction: column;
-overflow: hidden;
-border-radius: 10px;
+  max-width: 600px;
+  height: 100vh;              /* 🔥 full screen */
+  margin: auto;
+  display: flex;
+  flex-direction: column;
 }
+
+
+/* Messages */
 .messages {
   flex: 1;
-padding: 15px;
-overflow-y: auto;
-background: #de83c1;
-display: flex;
-flex-direction: column;
-gap: 10px;
+  padding: 15px;
+  overflow-y: auto;
+  background: #dbd3cb;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
+
+/* Message Bubble */
 .msg {
   max-width: 70%;
-  padding: 10px 15px;
-  border-radius: 17px;
-  font-size: 1.5vw;
-  line-height: 1.2;
-  word-wrap: break-word;
+  padding: 10px 14px;
+  border-radius: 18px;
+  font-size: 0.95rem;
 }
-.incomingMessage{
-  background: #544b51;
+
+/* Incoming */
+.incomingMessage {
+  background: #ffffff;
   align-self: flex-start;
-  border:1px solid #272526
 }
-.outgoingMessage{
-  background: #6c3b5d;
+
+/* Outgoing */
+.outgoingMessage {
+  background: #dcf8c6;
   align-self: flex-end;
-  border:1px solid #a26182
 }
-.inputs{
-  display: flex;
-  border-top: 1px solid #ffff;
-  padding: 10px;
-  background: #deb0d0;
+
+/* Input Area */
+.inputs {
+  position: sticky;
+  bottom: 0;
+  background: #f0f0f0;
+  display: flex;              /* 🔥 IMPORTANT */
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-top: 1px solid #ddd;
 }
-.inputs input[type='text']{
+
+/* Input Field */
+.inputs input {
   flex: 1;
-  padding: 10px 15px ;
-  font-size: 1.0vw;
-  border-radius: 21px;
-}
-.inputs button{
   padding: 10px 15px;
-  margin-left: 10px;
-  font-size: 1vw;
-  background-color: rgb(3, 71, 30);
-  color: #ffff;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  /* transition: 0.3 ease; */
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 0.95rem;
 }
-.inputs button:hover{
-  background-color: rgb(177, 182, 186);
-  color: #272526;
+
+/* Button */
+.inputs button {
+  padding: 10px 16px;
+  border-radius: 25px;        /* 🔥 circle mat bana, better pill */
+  border: none;
+  background: #25d366;
+  color: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+
+.inputs button:hover {
+  background: #1ebe5d;
+} 
+
+/* Scrollbar */
+.messages::-webkit-scrollbar {
+  width: 5px;
+}
+.messages::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 10px;
 }
