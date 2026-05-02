@@ -3,12 +3,12 @@ body {
   padding: 0;
   background: #ece5dd;
   font-family: 'Segoe UI', sans-serif;
-  position: relative;
+  /* position: relative; */
 }
 
 /* Header */
 .chat-header {
-  position: fixed;
+  /* position: fixed; */
   width: 100%;
   background: #075e54;
   color: white;

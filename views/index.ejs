@@ -1,5 +1,6 @@
 <%- include('partials/header')%>
 <div class="chat-header">💬 Chat App</div>
+<button id="joinRoom" onclick="joinRoom()">Join new room</button>
 <div class="conversionArea">
   <div class="messages"></div>
   <div class="inputs">
@@ -11,42 +12,78 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 const socket = io();
+let roomName = null;
+const username = prompt("Enter Your username");
 
-const msgBox = document.querySelector('.messages');
+//select the divs in variable
+const input = document.querySelector('input');
+const sendButton = document.querySelector('.inputs button');
+const messageDiv = document.querySelector('.messages')
 
-function scrollBottom() {
-  msgBox.scrollTop = msgBox.scrollHeight;
+function joinRoom(){
+  roomName = prompt('Enter Room Name')
+  messageDiv.innerHTML = ''; // clear the old msg
+  socket.emit('joinRoom',roomName);
 }
 
- function incomingMessage(msg) {
-    msgBox.innerHTML+=`<div class="msg incomingMessage">${msg}</div>`
-    scrollBottom();
-  }
-  function outgoingMessage(msg) {
-    msgBox.innerHTML+=`<div class="msg outgoingMessage">${msg}</div>`
-    scrollBottom();
+function formatTime(isotring){
+  const date = new Date(isotring);
+  const hours = date.getHours().toString().padStart(2,'0');
+  const minutes = date.getMinutes().toString().padStart(2,'0');
+  return `${hours}:${minutes}`;
+}
 
-  }
-const input = document.querySelector('input');
-const button = document.querySelector('button');
+function incomingMessage(msg){
+const isownMessage = msg.username === username;
+
+const msgElement = document.createElement('div');
+msgElement.className = `msg ${isownMessage?'outgoingMessage':'incomingMessage'}`
+msgElement.id = msg._id;
+msgElement.onclick = ()=>deleteMessage(msg._id);
+msgElement.innerHTML = `
+  <div class="username">${msg.username}</div>
+  <div class="data">${msg.msg}</div>
+  <div class="time">${formatTime(msg.createdAt)}</div>
+`;
+messageDiv.appendChild(msgElement);
+msgElement.scrollTop = msgElement.scrollHeight;//autoscroll
+}
+
 
 function sendMessage(){
   const msg = input.value.trim();
-  if (msg !== '') {
-    outgoingMessage(msg);
-    socket.emit('newmsg', msg);
-    input.value = '';
-  }
+  if (!msg || !roomName) return;
+
+  const messageObject = {
+    username,
+    msg,
+    roomName
+  };
+
+  socket.emit('sony',messageObject);// send the server
+  input.value = '';
 }
 
-button.addEventListener('click', sendMessage);
+function deleteMessage(id){
+  if (confirm('Delete This message')) {
+    socket.emit('deleteMessage',id);
+    const messageElem = document.getElementById(id);
+    if(messageElem) messageElem.remove();
+  }
+};
 
+sendButton.addEventListener('click', sendMessage);
 input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') sendMessage();
 });
 
 socket.on('incomingMessage', (message) => {
   incomingMessage(message);
+});
+
+socket.on('messageDeleted',(id)=>{
+  const messageElem = document.getElementById(id);
+  if(messageElem) messageElem.remove();
 });
 </script>
 <%- include('partials/footer')%>
